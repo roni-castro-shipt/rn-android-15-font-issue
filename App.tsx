@@ -1,45 +1,47 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import { StyleSheet, FlatList, Text, View } from 'react-native';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+const ItemSeparator = () => (
+  <View style={{ height: 1, borderBottomWidth: 1 }} />
+);
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
+export const Example = () => {
+  const effectiveMetros = [
+    { display_name: 'Abilene, TX', id: 1, name: 'Abilene', state: 'TX' },
+    {
+      display_name: 'Akron / Canton, OH',
+      id: 2,
+      name: 'Akron / Canton',
+      state: 'OH',
+    },
+    {
+      display_name: 'Alaska, AK',
+      id: 3,
+      name: 'Alaska',
+      selected: true,
+      state: 'AK',
+    },
+    { display_name: 'Albany, NY', id: 4, name: 'Albany', state: 'NY' },
+  ];
 
   return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
+    <FlatList
+      style={styles.list}
+      data={effectiveMetros}
+      renderItem={({ item: metro }) => (
+        <Text style={styles.text}>{metro.display_name}</Text>
+      )}
+      keyExtractor={metro => metro.id.toString()}
+      ItemSeparatorComponent={ItemSeparator}
+    />
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  list: { marginVertical: 60, marginHorizontal: 16 },
+  text: {
+    lineHeight: 24,
+    fontSize: 16,
   },
 });
 
-export default App;
+export default Example;
